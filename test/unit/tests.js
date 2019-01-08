@@ -895,6 +895,29 @@
 				test.done();
 			},
 
+			'Test yoyo works with arrays': function(test) {
+
+				TWEEN.removeAll();
+
+				var obj = { x: 0 },
+					t = new TWEEN.Tween( obj ).to( { x: [100, 200] }, 100 ).repeat( 1 ).yoyo(true);
+
+				t.start( 0 );
+
+				TWEEN.update( 50 );
+				test.equal( obj.x, 100 );
+
+				TWEEN.update( 100 );
+				test.equal( obj.x, 200 );
+
+				TWEEN.update( 150 );
+				test.equal( obj.x, 100 );
+
+				TWEEN.update( 200 );
+				test.equal( obj.x, 0 );
+				test.done();
+			},
+
 			'Test TWEEN.Tween.chain progressess into chained tweens': function(test) {
 
 				var obj = { t: 1000 };
@@ -1110,25 +1133,25 @@
 
 				test.done();
 			},
-			
+
 			'tween.isPlaying() is true when a tween is started and before it ends': function(test) {
 				TWEEN.removeAll();
-				
+
 				var t = new TWEEN.Tween({x:0}).to({x:1}, 100);
 				t.start(0);
 				test.equal(t.isPlaying(), true);
-				
+
 				test.done();
 			},
-			
+
 			'tween.isPlaying() is false after a tween ends': function(test) {
 				TWEEN.removeAll();
-				
+
 				var t = new TWEEN.Tween({x:0}).to({x:1}, 100);
 				t.start(0);
 				TWEEN.update(150);
 				test.equal(t.isPlaying(), false);
-				
+
 				test.done();
 			},
 
